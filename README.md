@@ -1,4 +1,4 @@
-# amazom-price-checker
+# Amazon Price Tracker
 A Python web-scraping script that automatically sends you an email when the price of an Amazon item has dropped within a range.
 
 ## How to Use
