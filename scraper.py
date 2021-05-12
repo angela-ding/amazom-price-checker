@@ -2,7 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import smtplib
 
-URL = 'https://www.amazon.ca/Sony-Full-Frame-Mirrorless-Interchangeable-Lens-ILCE7M3K/dp/B07B45D8WV/ref=sr_1_1?dchild=1&keywords=sony+a7&qid=1620780952&sr=8-1'
+URL = input("Enter your amazon url: ")
+wanted_price = input("Enter the price you'd like to purchase this item at: ")
+email = input("Enter your email: ")
 
 headers = {"User-Agent":'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15', 'Cache-Control':'no-cache', "Pragma":"no-cache"}
 
@@ -17,7 +19,7 @@ def check_price():
     converted_price = converted_price.replace(',',"")
     converted_price = float(converted_price[1:])
 
-    if(converted_price < 3000):
+    if(converted_price < float(wanted_price)):
         send_mail()
 
 def send_mail():
@@ -29,20 +31,16 @@ def send_mail():
     server.login('angelding27@gmail.com', 'tgsnwhwlapbqggez')
 
     subject = 'Price fell down!'
-    body = 'Check the amazon link: https://www.amazon.ca/Sony-Full-Frame-Mirrorless-Interchangeable-Lens-ILCE7M3K/dp/B07B45D8WV/ref=sr_1_1?dchild=1&keywords=sony+a7&qid=1620780952&sr=8-1'
+    body = f"Check the amazon link: {URL}"
 
     msg = f"Subject: {subject}\n\n{body}"
 
     server.sendmail(
         'angelding27@gmail.com',
-        'angelding27@gmail.com',
+        email,
         msg=msg
     )
 
     print("Email has been sent!")
 
     server.quit()
-
-while(True):
-    check_price()
-    time.sleep(3600*24)
